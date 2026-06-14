@@ -9,6 +9,7 @@ import FilterDrawer from "../../components/common/FilterDrawer";
 
 import { useProductStore } from "../../store/productStore";
 import type { FilterState } from "../../types/Filter";
+import { useOutletContext } from "react-router-dom";
 
 const Home = () => {
   const loadProducts = useProductStore((state) => state.loadProducts);
@@ -21,11 +22,10 @@ const Home = () => {
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const [filters, setFilters] = useState<FilterState>({
-    categories: [],
-    maxPrice: 1000,
-    rating: 0,
-  });
+  const { filters, setFilters } = useOutletContext<{
+    filters: FilterState;
+    setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+  }>();
 
   useEffect(() => {
     loadProducts();

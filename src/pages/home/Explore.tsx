@@ -1,7 +1,6 @@
 import { useState } from "react";
 import CategoryCard from "../../components/common/CategoryCard";
 import SearchBar from "../../components/common/SearchBar";
-import FilterDrawer from "../../components/common/FilterDrawer";
 
 const categories = [
   {
@@ -62,38 +61,16 @@ const categories = [
 
 const Explore = () => {
   const [search] = useState("");
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const filteredCategories = categories.filter((category) =>
     category.title.toLowerCase().includes(search.toLowerCase()),
   );
-  
+
   return (
     <div className="min-h-screen bg-[#FCFCFC]">
-      <div
-        className="
-          max-w-7xl
-          mx-auto
-          px-3
-          sm:px-4
-          md:px-6
-          lg:px-8
-          py-6
-          pb-24
-          md:pb-6
-        "
-      >
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 pb-24 md:pb-6">
         {/* Title */}
-        <h1
-          className="
-            text-2xl
-            md:text-3xl
-            font-bold
-            text-center
-            text-[#181725]
-            mb-6
-          "
-        >
+        <h1 className="text-2xl md:text-3xl font-bold text-center text-[#181725] mb-6">
           Find Products
         </h1>
 
@@ -101,18 +78,7 @@ const Explore = () => {
         <SearchBar />
 
         {/* Categories */}
-        <div
-          className="
-            mt-8
-            grid
-            grid-cols-2
-            sm:grid-cols-2
-            md:grid-cols-3
-            lg:grid-cols-4
-            xl:grid-cols-5
-            gap-4
-          "
-        >
+        <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {filteredCategories.map((category) => (
             <CategoryCard
               key={category.id}
@@ -129,20 +95,12 @@ const Explore = () => {
             <h3 className="text-lg font-semibold text-gray-600">
               No Categories Found
             </h3>
-
             <p className="text-gray-400 mt-2">
               Try searching another category.
             </p>
           </div>
         )}
       </div>
-
-      {/* Filter Drawer */}
-      <FilterDrawer
-        isOpen={isFilterOpen}
-        onClose={() => setIsFilterOpen(false)}
-        desktop={false}
-      />
     </div>
   );
 };

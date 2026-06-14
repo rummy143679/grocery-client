@@ -17,7 +17,7 @@ The application demonstrates how a real e-commerce platform is structured, inclu
 
 ## 🌐 Live Demo
 
-👉 [View Live Application](https://your-live-app-link.com)
+👉 [View Live Application](https://rummy-grocery-app.netlify.app/)
 
 ---
 
@@ -30,7 +30,7 @@ This project is designed to replicate a **real-world grocery delivery platform U
 - Pixel-perfect Figma implementation (mobile-first)
 - Fully responsive design (mobile + desktop)
 - Real-world e-commerce user flows
-- Mock API simulation for realistic behavior
+- Future implementation of Backend make easy
 
 It is built to demonstrate **frontend engineering skills equivalent to production-level applications**.
 
@@ -42,7 +42,7 @@ It is built to demonstrate **frontend engineering skills equivalent to productio
 
 - Splash screen → onboarding flow
 - Login / Signup functionality
-- OTP verification UI (mock)
+- OTP verification UI (ex. 1234)
 - Location selection screen
 - Persistent user session using localStorage
 
@@ -52,7 +52,7 @@ It is built to demonstrate **frontend engineering skills equivalent to productio
 
 - Category-based product listing
 - Product detail view
-- Search functionality with debounce
+- Search functionality
 - Filter UI (price, category, etc.)
 - Mock JSON-based product data
 

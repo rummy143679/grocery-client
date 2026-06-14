@@ -6,8 +6,8 @@ interface FilterDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   desktop?: boolean;
-  filters?: FilterState;
-  setFilters?: React.Dispatch<React.SetStateAction<FilterState>>;
+  filters: FilterState;
+  setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
 }
 
 const categories = [
@@ -32,12 +32,13 @@ const FilterDrawer = ({
   isOpen,
   onClose,
   desktop = false,
-  filters = defaultFilters,
+  filters,
   setFilters,
 }: FilterDrawerProps) => {
-  const toggleCategory = (category: string) => {
-    if (!setFilters) return;
+  // ✅ SAFE FALLBACK (prevents undefined crash)
+  const safeFilters: FilterState = filters ?? defaultFilters;
 
+  const toggleCategory = (category: string) => {
     setFilters((prev) => ({
       ...prev,
       categories: prev.categories.includes(category)
@@ -47,8 +48,6 @@ const FilterDrawer = ({
   };
 
   const updatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!setFilters) return;
-
     setFilters((prev) => ({
       ...prev,
       maxPrice: Number(e.target.value),
@@ -56,8 +55,6 @@ const FilterDrawer = ({
   };
 
   const updateRating = (rating: number) => {
-    if (!setFilters) return;
-
     setFilters((prev) => ({
       ...prev,
       rating,
@@ -65,28 +62,27 @@ const FilterDrawer = ({
   };
 
   const clearFilters = () => {
-    if (!setFilters) return;
     setFilters(defaultFilters);
   };
 
   const content = (
-    <>
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b">
+    <div className="flex flex-col h-full">
+      {/* HEADER */}
+      <div className="flex items-center justify-between p-4 border-b shrink-0">
         <div className="flex items-center gap-2">
           <FaFilter />
           <h2 className="text-lg font-semibold">Filters</h2>
         </div>
 
         {!desktop && (
-          <button onClick={onClose} className="p-1" aria-label="Close filters">
+          <button onClick={onClose} className="p-1">
             <FaTimes />
           </button>
         )}
       </div>
 
-      {/* Body */}
-      <div className="p-4 space-y-6">
+      {/* BODY (SCROLLABLE) */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {/* Categories */}
         <div>
           <h3 className="font-semibold mb-3">Categories</h3>
@@ -96,10 +92,9 @@ const FilterDrawer = ({
               <label key={category} className="flex items-center gap-2">
                 <input
                   type="checkbox"
-                  checked={filters.categories.includes(category)}
+                  checked={safeFilters.categories.includes(category)}
                   onChange={() => toggleCategory(category)}
                 />
-
                 <span className="capitalize">{category}</span>
               </label>
             ))}
@@ -108,14 +103,16 @@ const FilterDrawer = ({
 
         {/* Price */}
         <div>
-          <h3 className="font-semibold mb-3">Max Price: ₹{filters.maxPrice}</h3>
+          <h3 className="font-semibold mb-3">
+            Max Price: ₹{safeFilters.maxPrice}
+          </h3>
 
           <input
             type="range"
             min={0}
             max={1000}
             step={10}
-            value={filters.maxPrice}
+            value={safeFilters.maxPrice}
             onChange={updatePrice}
             className="w-full"
           />
@@ -131,52 +128,45 @@ const FilterDrawer = ({
                 <input
                   type="radio"
                   name="rating"
-                  checked={filters.rating === rating}
+                  checked={safeFilters.rating === rating}
                   onChange={() => updateRating(rating)}
                 />
-
                 <span>{rating}★ & Above</span>
               </label>
             ))}
           </div>
         </div>
-
-        {/* Buttons */}
-        <div className="flex gap-3 pt-4">
-          <button
-            onClick={clearFilters}
-            className="
-              flex-1
-              border
-              border-gray-300
-              rounded-xl
-              py-3
-            "
-          >
-            Clear
-          </button>
-
-          <button
-            onClick={onClose}
-            className="
-              flex-1
-              bg-[#53B175]
-              text-white
-              rounded-xl
-              py-3
-            "
-          >
-            Apply
-          </button>
-        </div>
       </div>
-    </>
+
+      {/* FOOTER */}
+      <div className="flex gap-3 p-4 border-t shrink-0 bg-white">
+        <button
+          onClick={clearFilters}
+          className="flex-1 border border-gray-300 rounded-xl py-3"
+        >
+          Clear
+        </button>
+
+        <button
+          onClick={onClose}
+          className="flex-1 bg-[#53B175] text-white rounded-xl py-3"
+        >
+          Apply
+        </button>
+      </div>
+    </div>
   );
 
+  /* DESKTOP */
   if (desktop) {
-    return <div className="bg-white h-full border-r">{content}</div>;
+    return (
+      <div className="bg-white h-screen w-full max-w-sm border-r flex flex-col">
+        {content}
+      </div>
+    );
   }
 
+  /* MOBILE */
   return (
     <>
       {/* Overlay */}
@@ -189,7 +179,7 @@ const FilterDrawer = ({
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white z-50 shadow-xl transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full w-[85%] sm:w-96 max-w-md bg-white z-50 shadow-xl flex flex-col transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

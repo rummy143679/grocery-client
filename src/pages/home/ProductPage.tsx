@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
 import ProductCard from "../../components/common/ProductCard";
@@ -18,11 +18,10 @@ const ProductsPage = () => {
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const [filters] = useState<FilterState>({
-    categories: [],
-    maxPrice: 1000,
-    rating: 0,
-  });
+  const { filters, setFilters } = useOutletContext<{
+    filters: FilterState;
+    setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+  }>();
 
   useEffect(() => {
     loadProducts();
@@ -150,6 +149,7 @@ const ProductsPage = () => {
       <FilterDrawer
         isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
+        setFilters={setFilters}
         filters={filters}
         desktop={false}
       />
