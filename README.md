@@ -54,7 +54,6 @@ It is built to demonstrate **frontend engineering skills equivalent to productio
 - Product detail view
 - Search functionality
 - Filter UI (price, category, etc.)
-- Mock JSON-based product data
 
 ---
 
@@ -100,8 +99,6 @@ It is built to demonstrate **frontend engineering skills equivalent to productio
 
 - Skeleton loaders for smooth UX
 - Empty states for better usability
-- Error handling UI states
-- Debounced search optimization
 - Smooth transitions and animations
 - Fully responsive breakpoints
 
@@ -156,7 +153,7 @@ This ensures:
 ## Desktop Design (Custom)
 
 - Max width container (`max-w-7xl`)
-- 4-column product grid
+- 6-column product grid
 - Sidebar filters
 - Sticky cart summary
 - Optimized spacing and layout
