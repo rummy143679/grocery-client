@@ -17,7 +17,7 @@ The application demonstrates how a real e-commerce platform is structured, inclu
 
 ## 🌐 Live Demo
 
-👉 [View Live Application](https://your-live-app-link.com)
+👉 [View Live Application](https://rummy-grocery-app.netlify.app/)
 
 ---
 
