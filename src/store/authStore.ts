@@ -11,7 +11,7 @@ interface AuthStore {
 
   register: (user: Omit<User, "id">) => boolean;
   login: (email: string, password: string) => User | boolean;
-  updateContact: (contact: number) => boolean;
+  updateContact: (contact: string) => boolean;
   logout: () => boolean;
 }
 
@@ -47,7 +47,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     const newUser: User = {
       id: Date.now(),
       ...user,
-      contact: user.contact || 0,
+      contact: user.contact || (0).toString(),
     };
 
     const updatedUsers = [...users, newUser];
@@ -96,7 +96,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   // 📞 UPDATE CONTACT (FIXED)
-  updateContact: (contact: number) => {
+  updateContact: (contact: string) => {
     const currentUser = get().currentUser;
 
     if (!currentUser) return false;

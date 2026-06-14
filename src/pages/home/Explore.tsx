@@ -61,13 +61,13 @@ const categories = [
 ];
 
 const Explore = () => {
-  const [search, setSearch] = useState("");
+  const [search] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const filteredCategories = categories.filter((category) =>
     category.title.toLowerCase().includes(search.toLowerCase()),
   );
-
+  
   return (
     <div className="min-h-screen bg-[#FCFCFC]">
       <div

@@ -1,11 +1,6 @@
 import { FaTimes, FaFilter } from "react-icons/fa";
 import React from "react";
-
-interface FilterState {
-  categories: string[];
-  maxPrice: number;
-  rating: number;
-}
+import type { FilterState } from "../../types/Filter";
 
 interface FilterDrawerProps {
   isOpen: boolean;

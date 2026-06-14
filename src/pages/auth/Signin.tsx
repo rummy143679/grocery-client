@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaGoogle, FaFacebookF, FaGlobe } from "react-icons/fa";
 import topImage from "../../assets/images/signin.jpg";
 import { useNavigate } from "react-router-dom";

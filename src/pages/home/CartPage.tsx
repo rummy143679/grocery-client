@@ -39,7 +39,7 @@ const CartPage = () => {
     setShowCheckout(true);
   };
 
-  const handlePlaceOrder = (deliveryMethod: string, paymentMethod: string) => {
+  const handlePlaceOrder = () => {
     const orderId = placeOrder(cartItems, total);
 
     clearCart();

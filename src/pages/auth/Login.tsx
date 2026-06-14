@@ -13,7 +13,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const login = useAuthStore((state) => state.login);
-  const currentUser = useAuthStore((state) => state.currentUser);
 
   const handleLogin = () => {
     // basic validation

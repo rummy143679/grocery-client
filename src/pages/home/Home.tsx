@@ -8,6 +8,7 @@ import CategorySection from "../../components/common/CategorySection";
 import FilterDrawer from "../../components/common/FilterDrawer";
 
 import { useProductStore } from "../../store/productStore";
+import type { FilterState } from "../../types/Filter";
 
 const Home = () => {
   const loadProducts = useProductStore((state) => state.loadProducts);
@@ -20,7 +21,7 @@ const Home = () => {
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<FilterState>({
     categories: [],
     maxPrice: 1000,
     rating: 0,

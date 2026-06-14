@@ -6,9 +6,10 @@ import ProductCard from "../../components/common/ProductCard";
 import FilterDrawer from "../../components/common/FilterDrawer";
 import { useProductStore } from "../../store/productStore";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import type { FilterState } from "../../types/Filter";
 
 const ProductsPage = () => {
-  const { category, query } = useParams<{ category: string; quey: string }>();
+  const { category } = useParams<{ category: string }>();
 
   const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ const ProductsPage = () => {
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const [filters, setFilters] = useState({
+  const [filters] = useState<FilterState>({
     categories: [],
     maxPrice: 1000,
     rating: 0,
@@ -36,12 +37,12 @@ const ProductsPage = () => {
       );
     }
 
+    // multi-category filter
     if (filters.categories.length) {
       result = result.filter((p) =>
-        filters.categories.includes(p.category.toLowerCase()),
+        filters.categories.includes((p.category ?? "").toLowerCase()),
       );
     }
-
     result = result.filter((p) => p.price <= filters.maxPrice);
 
     if (filters.rating > 0) {
@@ -50,26 +51,6 @@ const ProductsPage = () => {
 
     return result;
   }, [products, category, filters]);
-
-  //   const filteredProducts = useMemo(() => {
-  //     let result = [...products];
-
-  //     if (category) {
-  //       result = result.filter(
-  //         (p) => p.category?.toLowerCase() === category.toLowerCase(),
-  //       );
-  //     }
-
-  //     if (query) {
-  //       result = result.filter(
-  //         (p) =>
-  //           p.name.toLowerCase().includes(query.toLowerCase()) ||
-  //           p.description.toLowerCase().includes(query.toLowerCase()),
-  //       );
-  //     }
-
-  //     return result;
-  //   }, [products, category, query]);
 
   return (
     <div className="min-h-screen bg-[#FCFCFC] pb-24 md:pb-8">
@@ -102,21 +83,6 @@ const ProductsPage = () => {
             </h1>
           </div>
 
-          {/* <button
-            onClick={() => setIsFilterOpen(true)}
-            className="
-              px-4
-              py-2
-              bg-[#53B175]
-              text-white
-              rounded-xl
-              hover:opacity-90
-              transition
-            "
-          >
-            Filter
-          </button> */}
-          {/* Filter Button */}
           <button
             onClick={() => setIsFilterOpen(true)}
             aria-label="Open Filters"
@@ -181,18 +147,10 @@ const ProductsPage = () => {
           </div>
         )}
       </div>
-
-      {/* Filter Drawer */}
-      {/* <FilterDrawer
-        isOpen={isFilterOpen}
-        onClose={() => setIsFilterOpen(false)}
-        desktop={false}
-      /> */}
       <FilterDrawer
         isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
         filters={filters}
-        setFilters={setFilters}
         desktop={false}
       />
     </div>
